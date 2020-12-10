@@ -43,9 +43,15 @@ class Login extends Component {
       password: this.state.password,
     };
     handleLogin(login)
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log(res);
+        this.props.navigation.navigate("dashboard");
+      })
       .catch((err) => console.log(err));
   }
+  navigationRegister = () => {
+    this.props.navigation.navigate("register");
+  };
   render() {
     const nameIconEye = this.state.secureTextEntry ? "eye-slash" : "eye";
     return (
@@ -108,7 +114,7 @@ class Login extends Component {
                 ...styles.btnLogin,
                 backgroundColor: "#333",
               }}
-              onPress={() => console.log(this.props.login)}
+              onPress={this.navigationRegister}
             >
               <Text style={styles.login}>Register</Text>
             </TouchableOpacity>

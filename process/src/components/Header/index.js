@@ -5,8 +5,10 @@ import Icon from "react-native-vector-icons/FontAwesome5";
 var { height, width } = Dimensions.get("window");
 export default class Header extends Component {
   render() {
+    const { navigation } = this.props.nav;
     const handle = () => {
       this.props.navMenu();
+      // navigation.navigate("menu");
     };
     return (
       <View

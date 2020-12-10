@@ -27,15 +27,19 @@ class Dashboard extends Component {
   //     super(props);
   //     this.state = {};
   //   }
+
   navigationMenu = () => {
-    // this.props.navigation.navigator("menu");
     this.props.navigation.navigate("menu");
   };
+  navigationFarmseason = (data) => {
+    this.props.navigation.navigate("farmSeason");
+  };
   render() {
+    const { navigation } = this.props;
     return (
       <View>
-        <Header navMenu={this.navigationMenu} />
-        <ListFarm />
+        <Header navMenu={this.navigationMenu} nav={navigation} />
+        <ListFarm navFarmseason={this.navigationFarmseason} />
       </View>
     );
   }

@@ -1,4 +1,4 @@
-export const DOMAIN = "http://192.168.12.138:8080";
+export const DOMAIN = "http://4d41e3c85465.ngrok.io";
 
 export const LOGIN = DOMAIN + "/api/auth/login";
 export const REGISTER = DOMAIN + "/api/auth/register";
