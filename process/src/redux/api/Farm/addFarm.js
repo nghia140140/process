@@ -1,10 +1,9 @@
 import * as URL from "../../../configs/Domain/index";
 
-function handleLogin(data) {
+function addFarm(data) {
   return fetch(URL.FETCH_FARM, {
     method: "POST",
     headers: {
-      // 'Authorization': 'Bearer ' + DEMO_TOKEN
       Accept: "application/json, text/plain",
       "Content-Type": "application/json;charset=UTF-8",
     },
@@ -13,4 +12,4 @@ function handleLogin(data) {
     .then((res) => res.json())
     .then((resJSON) => resJSON);
 }
-export default handleLogin;
+export default addFarm;

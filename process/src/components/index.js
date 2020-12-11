@@ -15,7 +15,12 @@ import Login from "./User/Login/index";
 import Register from "./User/Register/index";
 import Menu from "./Menu/index";
 import Dashboard from './Dashboard/index';
-import ListFarmseason from './Farm/FarmSeason/index';
+import ListFarmseason from './FarmSeason/index';
+import ListProcess from './Process/index';
+import AddFarm from './Farm/AddFarm';
+import AddFarmseason from './FarmSeason/AddFarmseason';
+import AddProcess from './Process/AddProcess';
+import Profile from './User/Profile/index';
 
 
 
@@ -29,7 +34,7 @@ class Main extends Component {
   render() {
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="farmSeason">
+        <Stack.Navigator initialRouteName="dashboard">
           <Stack.Screen
             style={{ backgroundColor: "black" }}
             name="login"
@@ -41,6 +46,12 @@ class Main extends Component {
             style={{ backgroundColor: "black" }}
             name="register"
             component={Register}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            style={{ backgroundColor: "black" }}
+            name="profile"
+            component={Profile}
             options={{ headerShown: false }}
           />
           <Stack.Screen
@@ -57,16 +68,34 @@ class Main extends Component {
           />
           <Stack.Screen
             style={{ backgroundColor: "black" }}
-            name="farmSeason"
-            component={ListFarmseason}
+            name="addfarm"
+            component={AddFarm}
             options={{ headerShown: false }}
           />
-          {/* <Stack.Screen
+          <Stack.Screen
             style={{ backgroundColor: "black" }}
             name="farmSeason"
             component={ListFarmseason}
             options={{ headerShown: false }}
-          /> */}
+          />
+          <Stack.Screen
+            style={{ backgroundColor: "black" }}
+            name="addfarmseason"
+            component={AddFarmseason}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            style={{ backgroundColor: "black" }}
+            name="process"
+            component={ListProcess}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            style={{ backgroundColor: "black" }}
+            name="addprocess"
+            component={AddProcess}
+            options={{ headerShown: false }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     );

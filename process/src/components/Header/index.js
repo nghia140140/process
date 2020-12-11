@@ -5,10 +5,12 @@ import Icon from "react-native-vector-icons/FontAwesome5";
 var { height, width } = Dimensions.get("window");
 export default class Header extends Component {
   render() {
-    const { navigation } = this.props.nav;
+    // const { navigation } = this.props.nav;
     const handle = () => {
       this.props.navMenu();
-      // navigation.navigate("menu");
+    };
+    const navAddFarm = () => {
+      this.props.navAddFarm();
     };
     return (
       <View
@@ -25,8 +27,8 @@ export default class Header extends Component {
           <Icon name="bars" size={18} color={"#000"} />
           {/* <Text>icon menu</Text> */}
         </TouchableOpacity>
-        <TouchableOpacity>
-          <Text>icon menu</Text>
+        <TouchableOpacity onPress={navAddFarm} style={{marginRight: 15}}>
+          <Text>Thêm nông trại</Text>
         </TouchableOpacity>
       </View>
     );
