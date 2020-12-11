@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
   },
   up: {
+    marginTop: 20,
     flex: 4,
     alignItems: 'center',
   },

@@ -66,7 +66,7 @@ const defaultState = [
 ];
 
 const dataFarm = (state = defaultState, action) => {
-  if (action.type === FETCH_FARM) return action.data;
+  if (action.type === "FETCH_FARM") return action.data;
   if (action.type === GET_FARM) return state;
   return state;
 };

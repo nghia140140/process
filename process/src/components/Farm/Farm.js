@@ -31,14 +31,10 @@ class Farm extends Component {
   //   const farmingSeasons = this.props.myFarm;
   //   this.props.navFarmseason(farmingSeasons);
   // };
-  fet = () => {
+  navigationFarmseason = () => {
     const { farmingSeasons } = this.props.myFarm;
     this.props.actiongetFarmseason(farmingSeasons);
-  };
-  navigationFarmseason = () => {
-    this.fet();
-    const { farmingSeasons } = this.props.myFarm;
-    this.props.navFarmseason({ farmingSeasons });
+    this.props.navFarmseason();
   };
   render() {
     const {

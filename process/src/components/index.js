@@ -34,14 +34,13 @@ class Main extends Component {
   render() {
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="dashboard">
+        <Stack.Navigator initialRouteName="login">
           <Stack.Screen
             style={{ backgroundColor: "black" }}
             name="login"
             component={Login}
             options={{ headerShown: false }}
           />
-
           <Stack.Screen
             style={{ backgroundColor: "black" }}
             name="register"

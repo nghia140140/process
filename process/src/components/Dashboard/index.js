@@ -34,7 +34,7 @@ class Dashboard extends Component {
   navigationAddFarm = () => {
     this.props.navigation.navigate("addfarm");
   };
-  navigationFarmseason = (data) => {
+  navigationFarmseason = () => {
     this.props.navigation.navigate("farmSeason");
   };
   render() {

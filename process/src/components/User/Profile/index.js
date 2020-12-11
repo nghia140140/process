@@ -70,6 +70,9 @@ export default class Profile extends Component {
     temp[possition] = !temp[possition];
     this.setState({ secureTextEntry: temp });
   }
+  logout = () => {
+    this.props.navigation.navigate("login");
+  };
   render() {
     return (
       <View style={styles.container}>

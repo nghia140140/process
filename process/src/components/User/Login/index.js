@@ -12,18 +12,22 @@ import {
   ImageBackground,
   Image,
 } from "react-native";
-// im lib
-// import {connect} from 'react-redux';
+import jwt_decode from "jwt-decode";
+import { connect } from "react-redux";
 import FontAwesome from "react-native-vector-icons/FontAwesome5";
 import Icon from "react-native-vector-icons/FontAwesome5";
 
-// import Header from "../../Header";
 import Divider from "./Divider";
 // //styles
 import { styles } from "./styles";
 // // api
 // import apiLogin from '../../api/handleLogin';
 import handleLogin from "../../../redux/api/User/handleLogin";
+import { decode } from "../../../redux/action/User/decode";
+
+import { userLoginFetch } from "../../../redux/action/User/userLoginFetch";
+import fetchDataFarm from "../../../redux/api/Farm/fetchDataFarm";
+// import { getProfileFetch } from "../../../redux/action/Farm/getdata";
 
 const { height, width } = Dimensions.get("window");
 console.disableYellowBox = true;
@@ -42,13 +46,30 @@ class Login extends Component {
       username: this.state.username,
       password: this.state.password,
     };
+    // this.props.userLoginFetch(login);
     handleLogin(login)
       .then((res) => {
-        console.log(res);
-        this.props.navigation.navigate("dashboard");
+        if (res.error) {
+          console.log("error");
+        } else {
+          console.log(res);
+          localStorage.setItem("token", res.token);
+
+          var decoded = jwt_decode(res.token);
+          console.log("decode chua reducer");
+          console.log(decoded);
+          this.props.decode(decoded);
+          // fetchDataFarm(res.token);
+          // this.props.navigation.navigate("dashboard");
+        }
       })
       .catch((err) => console.log(err));
   }
+  getProfile = () => {
+    console.log("data profile: ");
+    const { decodeData } = this.props;
+    console.log(decodeData);
+  };
   navigationRegister = () => {
     this.props.navigation.navigate("register");
   };
@@ -57,7 +78,6 @@ class Login extends Component {
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
-          {/* <Header /> */}
           <View style={styles.up}>
             <Text style={styles.title}>Sign in</Text>
           </View>
@@ -106,6 +126,7 @@ class Login extends Component {
               name="facebook"
               backgroundColor="#3b5998"
               style={styles.facebook}
+              onPress={this.getProfile}
             >
               <Text style={{ color: "#fff" }}>Login with Facebook</Text>
             </FontAwesome.Button>
@@ -127,7 +148,7 @@ class Login extends Component {
 
 function mapStateToProps(state) {
   return {
-    login: state.login,
+    decodeData: state.decodeData,
   };
 }
-export default Login;
+export default connect(mapStateToProps, { userLoginFetch, decode })(Login);

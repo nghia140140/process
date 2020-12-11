@@ -14,13 +14,21 @@ export default class AddFarmseason extends Component {
     super(props);
     this.state = {
       name: "",
-      phone: "",
-      address: "",
+      description: "",
+      sowingDate: "",
+      harvestDate: "",
+      seed: "",
     };
   }
-  handleAddFarm = () => {
-    alert("asfdas");
-    console.log("ads");
+  handleAddFarmseason = () => {
+    let dataFarmseason = {
+      name: this.state.name,
+      description: this.state.description,
+      sowingDate: this.state.sowingDate,
+      harvestDate: this.state.harvestDate,
+      seed: this.state.seed,
+    }
+    // api post farmseason
   };
   navigationHome = () => {
     this.props.navigation.navigate("dashboard");
@@ -84,7 +92,7 @@ export default class AddFarmseason extends Component {
                 TextContentType="emaiAddress"
                 keyboardType="email-address"
                 placeholder="Mô tả"
-                onChangeText={(text) => this.setState({ phone: text })}
+                onChangeText={(text) => this.setState({ description: text })}
               ></TextInput>
             </View>
             <View style={styles.inputcomponent}>
@@ -93,7 +101,7 @@ export default class AddFarmseason extends Component {
                 TextContentType="emaiAddress"
                 keyboardType="email-address"
                 placeholder="Ngày gieo"
-                onChangeText={(text) => this.setState({ address: text })}
+                onChangeText={(text) => this.setState({ sowingDate: text })}
               ></TextInput>
             </View>
             <View style={styles.inputcomponent}>
@@ -102,7 +110,7 @@ export default class AddFarmseason extends Component {
                 TextContentType="emaiAddress"
                 keyboardType="email-address"
                 placeholder="Ngày thu hoạch"
-                onChangeText={(text) => this.setState({ address: text })}
+                onChangeText={(text) => this.setState({ harvestDate: text })}
               ></TextInput>
             </View>
             <View style={styles.inputcomponent}>
@@ -111,13 +119,13 @@ export default class AddFarmseason extends Component {
                 TextContentType="emaiAddress"
                 keyboardType="email-address"
                 placeholder="Giống"
-                onChangeText={(text) => this.setState({ address: text })}
+                onChangeText={(text) => this.setState({ seed: text })}
               ></TextInput>
             </View>
           </View>
           <View style={{ flex: 5 }}>
             <TouchableOpacity
-              onPress={this.handleAddFarm}
+              onPress={this.handleAddFarmseason}
               style={{
                 height: 45,
                 justifyContent: "center",
@@ -128,9 +136,7 @@ export default class AddFarmseason extends Component {
                 borderRadius: 5,
               }}
             >
-              <Text style={{ fontSize: 20, color: "#fff" }}>
-                Thêm mùa vụ
-              </Text>
+              <Text style={{ fontSize: 20, color: "#fff" }}>Thêm mùa vụ</Text>
             </TouchableOpacity>
           </View>
         </View>

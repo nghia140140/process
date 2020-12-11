@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import "localstorage-polyfill";
 import Main from "./src/components/index";
 
 import store from "./src/redux/store";

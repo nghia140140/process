@@ -14,13 +14,17 @@ export default class AddFarm extends Component {
     super(props);
     this.state = {
       name: "",
+      email: "",
       phone: "",
-      address: "",
     };
   }
   handleAddFarm = () => {
-    alert("asfdas");
-    console.log("ads");
+    const dataFarm={
+      name: this.state.name,
+      email: this.state.phone,
+      phone: this.state.address,
+    }
+    //api post data farm
   };
   navigationHome = () => {
     this.props.navigation.navigate("dashboard");
@@ -84,7 +88,7 @@ export default class AddFarm extends Component {
                 TextContentType="emaiAddress"
                 keyboardType="email-address"
                 placeholder="Nhập số điện thoại"
-                onChangeText={(text) => this.setState({ phone: text })}
+                onChangeText={(text) => this.setState({ email: text })}
               ></TextInput>
             </View>
             <View style={styles.inputcomponent}>
@@ -93,7 +97,7 @@ export default class AddFarm extends Component {
                 TextContentType="emaiAddress"
                 keyboardType="email-address"
                 placeholder="Nhập địa chỉ"
-                onChangeText={(text) => this.setState({ address: text })}
+                onChangeText={(text) => this.setState({ phone: text })}
               ></TextInput>
             </View>
           </View>

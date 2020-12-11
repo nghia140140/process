@@ -27,21 +27,39 @@ class ListFarm extends Component {
   //   super(props);
   //   this.state = {};
   // }
-  navigationFarmseason = (data) => {
-    this.props.navFarmseason(data);
+  navigationFarmseason = () => {
+    this.props.navFarmseason();
   };
   render() {
-    const dataFarm = this.props;
-    const data = dataFarm.dataFarm;
+    const { dataFarm } = this.props;
+    // const data = dataFarm.dataFarm;
+    const log = () => {
+      console.log(dataFarm);
+    };
     return (
       <View>
-        <FlatList
-          data={data}
-          renderItem={({ item }) => (
-            <Farm myFarm={item} navFarmseason={this.navigationFarmseason} />
-          )}
-          keyExtractor={(item, index) => index.toString()}
-        />
+        {dataFarm.length == 0 ? (
+          <View
+            style={{ justifyContent: "center", marginTop: 50, padding: 20 }}
+          >
+            <Text style={{ fontSize: 30, color: "#f00" }}>
+              Hiện tại chưa có mùa vụ nào, vui lòng tạo mới
+            </Text>
+          </View>
+        ) : (
+          <View>
+            <FlatList
+              data={dataFarm}
+              renderItem={({ item }) => (
+                <Farm myFarm={item} navFarmseason={this.navigationFarmseason} />
+              )}
+              keyExtractor={(item, index) => index.toString()}
+            />
+          </View>
+        )}
+        <TouchableOpacity onPress={log}>
+          <Text>logdata</Text>
+        </TouchableOpacity>
       </View>
     );
   }

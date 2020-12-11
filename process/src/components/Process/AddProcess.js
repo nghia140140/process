@@ -5,40 +5,47 @@ import {
   Dimensions,
   TextInput,
   TouchableOpacity,
+  Picker,
 } from "react-native";
+import { connect } from "react-redux";
+import RNPickerSelect from "@react-native-picker/picker";
+
 var { height, width } = Dimensions.get("window");
 import { styles } from "./stylesAddProcess";
 
-export default class AddProcess extends Component {
+class AddProcess extends Component {
   constructor(props) {
     super(props);
     this.state = {
       name: "",
       phone: "",
       address: "",
+      value: "",
     };
   }
   handleAddFarm = () => {
     alert("asfdas");
     console.log("ads");
   };
+  // piker() {
+  //   console.log("abc");
+  //   const { dataCultivation } = this.props;
+  //   console.log(dataCultivation);
+  //   // return {};
+  // }
 
   navigationHome = () => {
     this.props.navigation.navigate("dashboard");
   };
-  //   name: "Season Process 1",
-  //   note: "Note Season Process",
-  //   description: "Description Season Process",
-  //   stepsNumber: 3,
-  //   interval: 3,
-  //   status: "WAITING",
-  //   startDate: "2020-12-17T00:00:00Z",
-  //   endDate: "2021-02-17T00:00:00Z",
-  //   ratings: "EXCELLENT",
-  //   cultivationProcessId: null,
-  //   farmingSeasonId: 802,
-  //   seasonProcessSteps: [],
+  updateUser = (value) => {
+    this.setState({ value: value });
+  };
   render() {
+    const { dataCultivation } = this.props;
+    const piker = () => {
+      // console.log(dataCultivation);
+      console.log(this.state.value);
+    };
     return (
       <View style={{ marginTop: 25, flex: 1 }}>
         <View
@@ -82,6 +89,17 @@ export default class AddProcess extends Component {
                 Tạo quy trình
               </Text>
             </View>
+            <Picker
+              selectedValue={this.state.value}
+              style={{ height: 50, width: width }}
+              onValueChange={this.updateUser}
+            >
+              {dataCultivation.map((e) => {
+                return (
+                  <Picker.Item label={e.name} value={e.id} />
+                );
+              })}
+            </Picker>
             <View style={styles.inputcomponent}>
               <TextInput
                 style={styles.input}
@@ -130,7 +148,7 @@ export default class AddProcess extends Component {
           </View>
           <View style={{ flex: 5 }}>
             <TouchableOpacity
-              onPress={this.handleAddFarm}
+              onPress={piker}
               style={{
                 height: 45,
                 justifyContent: "center",
@@ -143,9 +161,17 @@ export default class AddProcess extends Component {
             >
               <Text style={{ fontSize: 20, color: "#fff" }}>Tạo quy trình</Text>
             </TouchableOpacity>
+            <Text></Text>
           </View>
         </View>
       </View>
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    dataCultivation: state.dataCultivation,
+  };
+}
+export default connect(mapStateToProps)(AddProcess);
