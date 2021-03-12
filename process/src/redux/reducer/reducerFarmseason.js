@@ -58,14 +58,12 @@ import { FETCH_FARMSEASON, GET_FARMSEASON } from "../types/Farm/types";
 //     },
 //   ],
 // },
-const defaultState = {
-  dataFarmseason: [],
-};
+const defaultState = {};
 const dataFarmseason = (state = defaultState, action) => {
   if (action.type === "FETCH_FARMSEASON") {
     console.log("data");
     console.log(action.data);
-    return { dataFarmseason: action.data };
+    return action.data;
   }
   if (action.type === { GET_FARMSEASON }) return state;
   return state;

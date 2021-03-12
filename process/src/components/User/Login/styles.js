@@ -13,9 +13,9 @@ const styles = StyleSheet.create({
   image: {
     backgroundColor: '#fff',
     marginTop: 100,
-    height: 100,
-    width: 100,
-    borderRadius: 50,
+    height: 180,
+    width: 180,
+    borderRadius: 90,
   },
   title: {
     color: '#333',
@@ -23,12 +23,11 @@ const styles = StyleSheet.create({
     fontSize: 25,
   },
   up: {
-    marginTop: 20,
-    flex: 4,
+    flex: 5,
     alignItems: 'center',
   },
   down: {
-    flex: 6,
+    flex: 5,
     justifyContent: 'flex-start',
     alignItems: 'center',
   },

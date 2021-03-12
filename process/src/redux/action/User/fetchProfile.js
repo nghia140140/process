@@ -1,15 +1,16 @@
-import { FETCH_FARMSEASON } from "../../types/Farm/types";
 import * as URL from "../../../configs/Domain/index";
-function loadData(data) {
+function getProfile(data) {
+  console.log("dispatch profile: ");
+  console.log(data);
   return {
-    type: "FETCH_FARM",
+    type: "FETCH_PROFILE",
     data,
   };
 }
-export const fetchDataFarm = (token) => {
+export const fetchProfile = (token, id) => {
   return (dispatch) => {
     if (token) {
-      return fetch(URL.GET_FARM, {
+      return fetch(URL.GET_PROFILE + id, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -19,10 +20,9 @@ export const fetchDataFarm = (token) => {
       })
         .then((resp) => resp.json())
         .then((data) => {
-          dispatch(loadData(data.data.content));
+          console.log(data.data);
+          dispatch(getProfile(data.data));
         });
-    } else {
-      console.log("loi server");
     }
   };
 };

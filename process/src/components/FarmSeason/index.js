@@ -33,7 +33,7 @@ class ListFarmseason extends Component {
     this.props.navigation.navigate("addfarmseason");
   };
   render() {
-    const { dataFarmseason } = this.props.dataFarmseason;
+    const { dataFarmseason } = this.props;
     return (
       <View style={{ marginTop: 25 }}>
         <View

@@ -54,11 +54,45 @@ const defaultState = [
     stepsNumber: 1,
     appliedNumber: 0,
     interval: 0,
+    cultivationSteps: [
+      {
+        id: 703,
+        name: "Bón làm tơi đất 2",
+        startDate: 1597795200.0,
+        interval: null,
+        afterDays: null,
+        startHour: null,
+        endDate: null,
+        description: "Cung cấp các chất dinh dưỡng cho đất nền",
+        status: "ACTIVATED",
+        note: "note",
+        type: null,
+        nextStepId: null,
+        cultivationProcessId: 652,
+      },
+      {
+        id: 704,
+        name: "Bón phân nền 2",
+        startDate: 1597622400.0,
+        interval: null,
+        afterDays: null,
+        startHour: null,
+        endDate: null,
+        description: "Cung cấp các chất dinh dưỡng cho đất nền",
+        status: "ACTIVATED",
+        note: "note",
+        type: null,
+        nextStepId: 703,
+        cultivationProcessId: 652,
+      },
+    ],
   },
 ];
 
 const dataCultivation = (state = defaultState, action) => {
-  if (action.type === "FETCH_CULVIVATION") return action.data;
+  if (action.type === "FETCH_CULTIVATION") {
+    return action.data;
+  }
   return state;
 };
 export default dataCultivation;

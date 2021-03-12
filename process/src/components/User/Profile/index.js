@@ -24,7 +24,7 @@ const iconArrowLeft = <Icon name="arrow-left" size={20} color={"#fff"} />;
 const iconPen = <Icon name="pen" size={13} color={"blue"} />;
 const iconUser = <Icon name="user" size={15} color={"gray"} />;
 
-const iconPhone = <Icon name="phone" size={13} color={"gray"} />;
+const iconPhone = <Icon name="user" size={13} color={"gray"} />;
 const iconEye_slash = <Icon name="eye-slash" size={13} color={"gray"} />;
 const iconEye = <Icon name="eye" size={13} color={"gray"} />;
 const iconAddress = <Icon name="map-marker" size={13} color={"gray"} />;
@@ -44,7 +44,9 @@ const lineHightlight = (
     style={{ width: width - 130, height: 2, backgroundColor: "blue" }}
   ></View>
 );
-export default class Profile extends Component {
+
+import { connect } from "react-redux";
+class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -64,7 +66,16 @@ export default class Profile extends Component {
       secureTextEntry: [true, true, true],
     };
   }
-  componentDidMount() {}
+  componentDidMount() {
+    const { firstname, lastname, email, username } = this.props.profile;
+    this.setState({
+      name: firstname + " " + lastname,
+      email: email,
+      username: username,
+    });
+    console.log("hello");
+    console.log(username);
+  }
   _hidenPassword(possition) {
     let temp = [...this.state.secureTextEntry];
     temp[possition] = !temp[possition];
@@ -74,6 +85,7 @@ export default class Profile extends Component {
     this.props.navigation.navigate("login");
   };
   render() {
+    // const { profile } = this.props;
     return (
       <View style={styles.container}>
         <View style={styles.header}>
@@ -152,7 +164,7 @@ export default class Profile extends Component {
               {this.state.edit == false ? line2 : lineHightlight}
             </View>
             <View style={styles.infor}>
-              <View style={styles.iconFirst}>{iconPhone}</View>
+              <View style={styles.iconFirst}>{iconUser}</View>
               <View style={styles.formInput}>
                 <View
                   style={{
@@ -160,19 +172,19 @@ export default class Profile extends Component {
                     justifyContent: "flex-end",
                   }}
                 >
-                  <Text style={styles.label}>Phone</Text>
+                  <Text style={styles.label}>Username</Text>
                 </View>
                 <TextInput
                   style={styles.input}
-                  placeholder="Enter your phone"
-                  onChangeText={(text) => this.setState({ phone: text })}
-                  value={this.state.phone}
+                  placeholder="Enter your username"
+                  onChangeText={(text) => this.setState({ username: text })}
+                  value={this.state.username}
                   editable={this.state.edit}
                 ></TextInput>
               </View>
               <View style={styles.iconLast}>{iconLock}</View>
             </View>
-            <View style={styles.line2}>
+            {/* <View style={styles.line2}>
               {this.state.edit == false ? line2 : lineHightlight}
             </View>
             <View style={styles.infor}>
@@ -195,7 +207,7 @@ export default class Profile extends Component {
                 ></TextInput>
               </View>
               <View style={styles.iconLast}>{iconLock}</View>
-            </View>
+            </View> */}
             <View style={styles.line2}>
               {this.state.edit == false ? line2 : lineHightlight}
             </View>
@@ -223,174 +235,6 @@ export default class Profile extends Component {
             <View style={styles.line2}>
               {this.state.edit == false ? line2 : lineHightlight}
             </View>
-            {/* {this.state.edit == false ? (
-              this.state.changePass == false ? (
-                <TouchableOpacity>
-                  <Text style={{ color: "blue" }}>Change Password</Text>
-                </TouchableOpacity>
-              ) : (
-                <View style={{ width: width, alignItems: "center" }}>
-                  <View style={styles.infor}>
-                    <View style={styles.iconFirst}>{iconLock}</View>
-                    <View style={styles.formInput}>
-                      <View
-                        style={{
-                          heigth: 25,
-                          justifyContent: "flex-end",
-                        }}
-                      >
-                        <Text style={styles.label}>Current</Text>
-                      </View>
-                      <TextInput
-                        style={styles.input}
-                        placeholder="Enter current password"
-                        secureTextEntry={this.state.secureTextEntry[0]}
-                        onChangeText={(text) =>
-                          this.setState({ passwordCurrent: text })
-                        }
-                        value={this.state.passwordCurrent}
-                      ></TextInput>
-                    </View>
-                    <TouchableOpacity
-                      onPress={() => this._hidenPassword(0)}
-                      style={styles.iconLast}
-                    >
-                      {this.state.secureTextEntry[0] == true
-                        ? iconEye_slash
-                        : iconEye}
-                    </TouchableOpacity>
-                  </View>
-                  <View style={styles.line2}>
-                    {this.state.edit == false ? line2 : lineHightlight}
-                  </View>
-                  <View style={styles.infor}>
-                    <View style={styles.iconFirst}>{iconLock}</View>
-                    <View style={styles.formInput}>
-                      <View
-                        style={{
-                          heigth: 25,
-                          justifyContent: "flex-end",
-                        }}
-                      >
-                        <Text style={styles.label}>New</Text>
-                      </View>
-                      <TextInput
-                        style={styles.input}
-                        placeholder="Enter your new password"
-                        secureTextEntry={this.state.secureTextEntry[1]}
-                        onChangeText={(text) =>
-                          this.setState({ passwordNew: text })
-                        }
-                        value={this.state.passwordNew}
-                      ></TextInput>
-                    </View>
-                    <TouchableOpacity
-                      onPress={() => this._hidenPassword(1)}
-                      style={styles.iconLast}
-                    >
-                      {this.state.secureTextEntry[1] == true
-                        ? iconEye_slash
-                        : iconEye}
-                    </TouchableOpacity>
-                  </View>
-                  <View style={styles.line2}>
-                    {this.state.edit == false ? line2 : lineHightlight}
-                  </View>
-                  <View style={styles.infor}>
-                    <View style={styles.iconFirst}>{iconLock}</View>
-                    <View style={styles.formInput}>
-                      <View
-                        style={{
-                          heigth: 25,
-                          justifyContent: "flex-end",
-                        }}
-                      >
-                        <Text style={styles.label}>Re-type new</Text>
-                      </View>
-                      <TextInput
-                        style={styles.input}
-                        placeholder="Confirm password"
-                        secureTextEntry={this.state.secureTextEntry[2]}
-                        onChangeText={(text) =>
-                          this.setState({ passwordReTypeNew: text })
-                        }
-                        value={this.state.passwordReTypeNew}
-                      ></TextInput>
-                    </View>
-                    <TouchableOpacity
-                      onPress={() => this._hidenPassword(2)}
-                      style={styles.iconLast}
-                    >
-                      {this.state.secureTextEntry[2] == true
-                        ? iconEye_slash
-                        : iconEye}
-                    </TouchableOpacity>
-                  </View>
-                  <View style={styles.line2}>
-                    {this.state.edit == false ? line2 : lineHightlight}
-                  </View>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                      width: width - 80,
-                    }}
-                  >
-                    <TouchableOpacity
-                      onPress={() => this.changePass()}
-                      style={{
-                        width: width / 3,
-                        justifyContent: "center",
-                        padding: 5,
-                        backgroundColor: "#468499",
-                        borderRadius: 5,
-                        alignItems: "center",
-                      }}
-                    >
-                      <Text style={{ color: "#fff", fontSize: 15 }}>
-                        Change
-                      </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      onPress={() => this.setState({ changePass: false })}
-                      style={{
-                        width: width / 3,
-                        justifyContent: "center",
-                        padding: 5,
-                        backgroundColor: "#468499",
-                        borderRadius: 5,
-                        alignItems: "center",
-                      }}
-                    >
-                      <Text style={{ color: "#fff", fontSize: 15 }}>
-                        Cancel
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                  <View style={{ width: width }}>
-                    <DropdownAlert
-                      ref={(ref) => (this.dropDownAlertRef = ref)}
-                    />
-                  </View>
-                </View>
-              )
-            ) : (
-              <View style={{ paddingTop: 30 }}>
-                <TouchableOpacity
-                  onPress={() => this.editProfile()}
-                  style={{
-                    width: (width * 2) / 3,
-                    backgroundColor: "#468499",
-                    justifyContent: "center",
-                    borderRadius: 5,
-                    padding: 5,
-                    alignItems: "center",
-                  }}
-                >
-                  <Text style={{ color: "#fff", fontSize: 15 }}>Save</Text>
-                </TouchableOpacity>
-              </View>
-            )} */}
             <View style={{ height: 18 }}></View>
           </View>
         </ScrollView>
@@ -398,3 +242,9 @@ export default class Profile extends Component {
     );
   }
 }
+function mapStateToProps(state) {
+  return {
+    profile: state.profile,
+  };
+}
+export default connect(mapStateToProps)(Profile);

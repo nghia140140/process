@@ -24,7 +24,8 @@ export default class Header extends Component {
         }}
       >
         <TouchableOpacity style={{ marginLeft: 15 }} onPress={handle}>
-          <Icon name="bars" size={18} color={"#000"} />
+          {/* <Icon name="bars" size={18} color={"#000"} /> */}
+          <Icon name="user" size={18} color={"#000"} />
           {/* <Text>icon menu</Text> */}
         </TouchableOpacity>
         <TouchableOpacity onPress={navAddFarm} style={{marginRight: 15}}>

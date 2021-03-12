@@ -26,8 +26,11 @@ import handleLogin from "../../../redux/api/User/handleLogin";
 import { decode } from "../../../redux/action/User/decode";
 
 import { userLoginFetch } from "../../../redux/action/User/userLoginFetch";
-import fetchDataFarm from "../../../redux/api/Farm/fetchDataFarm";
-// import { getProfileFetch } from "../../../redux/action/Farm/getdata";
+import { fetchDataFarm } from "../../../redux/action/Farm/actionFetchFarm";
+import fetchDataCultivation from "../../../redux/action/Farm/fetchDataCultivation";
+import error from "../../../configs/Error/index";
+
+import { fetchProfile } from "../../../redux/action/User/fetchProfile";
 
 const { height, width } = Dimensions.get("window");
 console.disableYellowBox = true;
@@ -42,29 +45,51 @@ class Login extends Component {
     };
   }
   _Login() {
-    const login = {
-      username: this.state.username,
-      password: this.state.password,
-    };
-    // this.props.userLoginFetch(login);
-    handleLogin(login)
-      .then((res) => {
-        if (res.error) {
-          console.log("error");
-        } else {
-          console.log(res);
-          localStorage.setItem("token", res.token);
+    console.log(error.chua_nhap_tai_khoan);
+    if (this.state.username.length == 0) {
+      this.setState({
+        error: error.chua_nhap_tai_khoan,
+      });
+    } else if (this.state.password.length == 0) {
+      this.setState({
+        error: error.chua_nhap_mat_khau,
+      });
+    } else {
+      const login = {
+        username: this.state.username,
+        password: this.state.password,
+        // username: "kaiz97",
+        // password: "097882",
+      };
+      // this.props.userLoginFetch(login);
+      handleLogin(login)
+        .then((res) => {
+          if (res.error) {
+            this.setState({
+              error: error.tai_khoan_hoac_mat_khau_sai,
+            });
+          } else {
+            console.log(res);
+            localStorage.setItem("token", res.token);
 
-          var decoded = jwt_decode(res.token);
-          console.log("decode chua reducer");
-          console.log(decoded);
-          this.props.decode(decoded);
-          // fetchDataFarm(res.token);
-          // this.props.navigation.navigate("dashboard");
-        }
-      })
-      .catch((err) => console.log(err));
+            var decoded = jwt_decode(res.token);
+            this.props.decode(decoded);
+            this.props.fetchProfile(res.token, decoded.jti);
+            this.props.fetchDataFarm(res.token);
+            this.props.fetchDataCultivation(res.token);
+            this.props.navigation.navigate("dashboard");
+          }
+        })
+        .catch((err) =>
+          this.setState({
+            error: error.loi_server,
+          })
+        );
+    }
   }
+  loginFb = () => {
+    this.setState({ error: error.tinh_nang_dang_cap_nhat });
+  };
   getProfile = () => {
     console.log("data profile: ");
     const { decodeData } = this.props;
@@ -79,8 +104,14 @@ class Login extends Component {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
           <View style={styles.up}>
+            <Image
+              style={styles.image}
+              // resizeMode="contain"
+              source={require("../../../image/login.jpg")}
+            />
             <Text style={styles.title}>Sign in</Text>
           </View>
+
           <View style={styles.down}>
             <View>
               <Text style={styles.error}>{this.state.error}</Text>
@@ -88,9 +119,7 @@ class Login extends Component {
             <View style={styles.inputcomponent}>
               <TextInput
                 style={styles.input}
-                TextContentType="emaiAddress"
-                keyboardType="email-address"
-                placeholder="Nhập email"
+                placeholder="Nhập Tài khoản"
                 onChangeText={(text) => this.setState({ username: text })}
               ></TextInput>
             </View>
@@ -126,7 +155,7 @@ class Login extends Component {
               name="facebook"
               backgroundColor="#3b5998"
               style={styles.facebook}
-              onPress={this.getProfile}
+              onPress={this.loginFb}
             >
               <Text style={{ color: "#fff" }}>Login with Facebook</Text>
             </FontAwesome.Button>
@@ -151,4 +180,10 @@ function mapStateToProps(state) {
     decodeData: state.decodeData,
   };
 }
-export default connect(mapStateToProps, { userLoginFetch, decode })(Login);
+export default connect(mapStateToProps, {
+  fetchDataFarm,
+  userLoginFetch,
+  fetchProfile,
+  decode,
+  fetchDataCultivation,
+})(Login);

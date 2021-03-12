@@ -8,32 +8,107 @@ import {
 } from "react-native";
 var { height, width } = Dimensions.get("window");
 import { styles } from "./stylesAddFarmseason";
+import { connect } from "react-redux";
+import Icon from "react-native-vector-icons/FontAwesome5";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
-export default class AddFarmseason extends Component {
+import { addFarmseason } from "../../redux/action/Farm/addFarmseason";
+
+class AddFarmseason extends Component {
   constructor(props) {
     super(props);
     this.state = {
       name: "",
       description: "",
-      sowingDate: "",
-      harvestDate: "",
+      sowingDate: new Date(),
+      harvestDate: new Date(),
+      dataSowingDate: "",
+      dataHarvestDate: "",
       seed: "",
+      date: new Date(),
+      showSowingDate: false,
+      showHarvestDate: false,
     };
   }
   handleAddFarmseason = () => {
+    const sowingDateTime =
+      this.state.sowingDate.getFullYear() +
+      "-" +
+      (this.state.sowingDate.getMonth() + 1) +
+      "-" +
+      this.state.sowingDate.getDate();
+    const harvestDateTime =
+      this.state.harvestDate.getFullYear() +
+      "-" +
+      (this.state.harvestDate.getMonth() + 1) +
+      "-" +
+      this.state.harvestDate.getDate();
+    // console.log(sowingDateTime);
     let dataFarmseason = {
       name: this.state.name,
       description: this.state.description,
       sowingDate: this.state.sowingDate,
       harvestDate: this.state.harvestDate,
+      // sowingDate: sowingDateTime,
+      // harvestDate: harvestDateTime,
       seed: this.state.seed,
-    }
+      totalCrop: 4,
+      // status: "",
+      cultivationHistories: [],
+      farmId: this.props.idFarm,
+      seasonProcesses: [],
+    };
+    this.props.addFarmseason(dataFarmseason);
+    this.props.navigation.navigate("addprocess");
     // api post farmseason
+    // console.log(this.state.harvestDate);
+    // console.log(this.state.sowingDate);
   };
   navigationHome = () => {
     this.props.navigation.navigate("dashboard");
   };
+
+  showDateSowing = () => {
+    this.setState({ showSowingDate: true });
+  };
+  showDateHarvest = () => {
+    this.setState({ showHarvestDate: true });
+  };
+
+  onChangeSowingDate = (event, selectedDate) => {
+    const currentDate = selectedDate || this.state.date;
+    const sowingDateTime =
+      currentDate.getDate() +
+      "-" +
+      (currentDate.getMonth() + 1) +
+      "-" +
+      currentDate.getFullYear();
+    console.log(sowingDateTime);
+    this.setState({
+      showSowingDate: Platform.OS === "ios",
+      sowingDate: currentDate,
+      dataSowingDate: sowingDateTime,
+    });
+  };
+  onChangeHarvestDate = (event, selectedDate) => {
+    const currentDate = selectedDate || this.state.date;
+    const harvestDateTime =
+      currentDate.getDate() +
+      "-" +
+      (currentDate.getMonth() + 1) +
+      "-" +
+      currentDate.getFullYear();
+    console.log(harvestDateTime);
+    this.setState({
+      showHarvestDate: Platform.OS === "ios",
+      harvestDate: currentDate,
+      dataHarvestDate: harvestDateTime,
+    });
+  };
   render() {
+    const logdata = () => {
+      console.log(this.state.harvestDate);
+    };
     return (
       <View style={{ marginTop: 25, flex: 1 }}>
         <View
@@ -95,24 +170,58 @@ export default class AddFarmseason extends Component {
                 onChangeText={(text) => this.setState({ description: text })}
               ></TextInput>
             </View>
-            <View style={styles.inputcomponent}>
+            <View style={styles.date}>
               <TextInput
                 style={styles.input}
                 TextContentType="emaiAddress"
                 keyboardType="email-address"
                 placeholder="Ngày gieo"
-                onChangeText={(text) => this.setState({ sowingDate: text })}
+                value={this.state.dataSowingDate}
+                // onChangeText={(text) => this.setState({ sowingDate: text })}
               ></TextInput>
+              <TouchableOpacity
+                onPress={this.showDateSowing}
+                style={{ positon: "absolute", right: 40, top: 10 }}
+              >
+                <Icon name={"calendar-alt"} size={20} color={"black"} />
+              </TouchableOpacity>
             </View>
-            <View style={styles.inputcomponent}>
+            <View style={styles.date}>
               <TextInput
                 style={styles.input}
                 TextContentType="emaiAddress"
                 keyboardType="email-address"
                 placeholder="Ngày thu hoạch"
-                onChangeText={(text) => this.setState({ harvestDate: text })}
+                value={this.state.dataHarvestDate}
+                // onChangeText={(text) => this.setState({ harvestDate: text })}
               ></TextInput>
+              <TouchableOpacity
+                onPress={this.showDateHarvest}
+                style={{ positon: "absolute", right: 40, top: 10 }}
+              >
+                <Icon name={"calendar-alt"} size={20} color={"black"} />
+              </TouchableOpacity>
             </View>
+            {this.state.showSowingDate && (
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={this.state.date}
+                mode={"date"}
+                is24Hour={true}
+                display="default"
+                onChange={this.onChangeSowingDate}
+              />
+            )}
+            {this.state.showHarvestDate && (
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={this.state.date}
+                mode={"date"}
+                is24Hour={true}
+                display="default"
+                onChange={this.onChangeHarvestDate}
+              />
+            )}
             <View style={styles.inputcomponent}>
               <TextInput
                 style={styles.input}
@@ -144,3 +253,9 @@ export default class AddFarmseason extends Component {
     );
   }
 }
+function mapStateToProps(state) {
+  return {
+    idFarm: state.idFarm,
+  };
+}
+export default connect(mapStateToProps, { addFarmseason })(AddFarmseason);

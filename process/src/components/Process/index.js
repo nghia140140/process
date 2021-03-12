@@ -16,6 +16,7 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome5";
 
+import fetchDataCultivation from "../../redux/action/Farm/fetchDataCultivation";
 import Process from "./Process";
 import { connect } from "react-redux";
 var { height, width } = Dimensions.get("window");
@@ -25,6 +26,12 @@ class ListProcess extends Component {
     this.props.navigation.navigate("dashboard");
   };
   navigationAddProcess = () => {
+    const token = "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIzMDMiLCJzdWIiOiJrYWl6OTciLCJpYXQiOjE2MDc3NTQwNzgsImV4cCI6MTYwNzg1NDA3OH0.AdmsKjw3OqHSanijH8uM6H9uRG33122G5iHFqhZJeaWImCi2tseO3VDzTKzSjIwsOC1DTK8S4z06I79So_vDvg"
+    // const token = localStorage.token;
+    console.log(token);
+    this.props.fetchDataCultivation(token);
+    // .then((res) => console.log(res))
+    // .catch((err) => console.log(err));
     this.props.navigation.navigate("addprocess");
   };
   render() {
@@ -97,4 +104,4 @@ function mapStateToProps(state) {
     seasonProcesses: state.seasonProcesses,
   };
 }
-export default connect(mapStateToProps)(ListProcess);
+export default connect(mapStateToProps, { fetchDataCultivation })(ListProcess);

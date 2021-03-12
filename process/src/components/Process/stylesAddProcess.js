@@ -18,5 +18,11 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     marginRight: 15,
   },
+  date: {
+    marginTop: 30,
+    flexDirection: "row",
+    position: "relative",
+    left: 10,
+  },
 });
 export { styles };

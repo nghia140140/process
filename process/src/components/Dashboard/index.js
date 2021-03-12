@@ -29,7 +29,7 @@ class Dashboard extends Component {
   //   }
 
   navigationMenu = () => {
-    this.props.navigation.navigate("menu");
+    this.props.navigation.navigate("profile");
   };
   navigationAddFarm = () => {
     this.props.navigation.navigate("addfarm");

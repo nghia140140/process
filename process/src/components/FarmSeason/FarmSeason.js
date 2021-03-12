@@ -59,6 +59,20 @@ class Farmseason extends Component {
       seasonProcesses,
     } = this.props.myFarm;
     const { dataFarmseason } = this.props;
+    const sowing = new Date(sowingDate);
+    const sowingDateString =
+      sowing.getDate() +
+      "-" +
+      (sowing.getMonth() + 1) +
+      "-" +
+      sowing.getFullYear();
+    const harvest = new Date(harvestDate);
+    const harvestDateString =
+      harvest.getDate() +
+      "-" +
+      (harvest.getMonth() + 1) +
+      "-" +
+      harvest.getFullYear();
     return (
       <View>
         <TouchableOpacity onPress={this.navigationProcess}>
@@ -81,13 +95,13 @@ class Farmseason extends Component {
             <View style={styles.item}>
               <Text style={styles.label}>Ngày Gieo hạt:</Text>
               <View style={styles.data}>
-                <Text>{this.state.sowingDate}</Text>
+                <Text>{sowingDateString}</Text>
               </View>
             </View>
             <View style={styles.item}>
               <Text style={styles.label}>Ngày thu hoạch:</Text>
               <View style={styles.data}>
-                <Text>{harvestDate}</Text>
+                <Text>{harvestDateString}</Text>
               </View>
             </View>
             <View style={styles.item}>

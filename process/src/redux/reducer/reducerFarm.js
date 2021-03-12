@@ -67,7 +67,7 @@ const defaultState = [
 
 const dataFarm = (state = defaultState, action) => {
   if (action.type === "FETCH_FARM") return action.data;
-  if (action.type === GET_FARM) return state;
+  // if (action.type === "ADD_FARM") return { state: state.concat(action.data) };
   return state;
 };
 export default dataFarm;

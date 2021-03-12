@@ -17,6 +17,7 @@ import Icon from "react-native-vector-icons/FontAwesome5";
 
 import { connect } from "react-redux";
 import { actiongetFarmseason } from "../../redux/action/Farm/actionFarmseason";
+import { updateIdFarm } from "../../redux/action/Farm/addFarmseason";
 
 var { height, width } = Dimensions.get("window");
 
@@ -32,7 +33,8 @@ class Farm extends Component {
   //   this.props.navFarmseason(farmingSeasons);
   // };
   navigationFarmseason = () => {
-    const { farmingSeasons } = this.props.myFarm;
+    const { id, farmingSeasons } = this.props.myFarm;
+    this.props.updateIdFarm(id);
     this.props.actiongetFarmseason(farmingSeasons);
     this.props.navFarmseason();
   };
@@ -42,6 +44,7 @@ class Farm extends Component {
       email,
       farmingSeasonNumber,
       id,
+      address,
       name,
       phone,
       status,
@@ -61,15 +64,15 @@ class Farm extends Component {
           >
             <View style={{ flex: 1 }}>
               <Image
-                style={{ width: width / 3, height: 100 }}
-                resizeMode="contain"
+                style={{ width: width / 3, height: 100, borderRadius: 30 }}
+                // resizeMode="contain"
                 source={require(imagePath)}
               />
             </View>
-            <View style={{ flex: 2 }}>
+            <View style={{ flex: 2, alignItems: "center" }}>
               <Text style={{ fontSize: 30 }}>{name}</Text>
-              <Text>{phone}</Text>
-              <Text>{status}</Text>
+              <Text>SĐT: {phone}</Text>
+              <Text>Địa chỉ: {address}</Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -81,4 +84,4 @@ class Farm extends Component {
 //   dispatch,
 //   actiongetFarmseason,
 // });
-export default connect(null, { actiongetFarmseason })(Farm);
+export default connect(null, { actiongetFarmseason, updateIdFarm })(Farm);

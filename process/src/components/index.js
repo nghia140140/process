@@ -22,6 +22,8 @@ import AddFarmseason from './FarmSeason/AddFarmseason';
 import AddProcess from './Process/AddProcess';
 import Profile from './User/Profile/index';
 
+import DateTime from './datetimepiker';
+
 
 
 import { NavigationContainer } from "@react-navigation/native";
@@ -36,63 +38,58 @@ class Main extends Component {
       <NavigationContainer>
         <Stack.Navigator initialRouteName="login">
           <Stack.Screen
-            style={{ backgroundColor: "black" }}
             name="login"
             component={Login}
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            style={{ backgroundColor: "black" }}
             name="register"
             component={Register}
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            style={{ backgroundColor: "black" }}
             name="profile"
             component={Profile}
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            style={{ backgroundColor: "black" }}
             name="menu"
             component={Menu}
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            style={{ backgroundColor: "black" }}
             name="dashboard"
             component={Dashboard}
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            style={{ backgroundColor: "black" }}
             name="addfarm"
             component={AddFarm}
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            style={{ backgroundColor: "black" }}
             name="farmSeason"
             component={ListFarmseason}
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            style={{ backgroundColor: "black" }}
             name="addfarmseason"
             component={AddFarmseason}
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            style={{ backgroundColor: "black" }}
             name="process"
             component={ListProcess}
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            style={{ backgroundColor: "black" }}
             name="addprocess"
             component={AddProcess}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="datetime"
+            component={DateTime}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

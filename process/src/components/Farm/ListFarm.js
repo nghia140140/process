@@ -12,6 +12,7 @@ import {
   StyleSheet,
   ImageBackground,
   FlatList,
+  ScrollView,
   Image,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome5";
@@ -38,28 +39,36 @@ class ListFarm extends Component {
     };
     return (
       <View>
-        {dataFarm.length == 0 ? (
-          <View
-            style={{ justifyContent: "center", marginTop: 50, padding: 20 }}
-          >
-            <Text style={{ fontSize: 30, color: "#f00" }}>
-              Hiện tại chưa có mùa vụ nào, vui lòng tạo mới
-            </Text>
-          </View>
-        ) : (
-          <View>
-            <FlatList
-              data={dataFarm}
-              renderItem={({ item }) => (
-                <Farm myFarm={item} navFarmseason={this.navigationFarmseason} />
-              )}
-              keyExtractor={(item, index) => index.toString()}
-            />
-          </View>
-        )}
-        <TouchableOpacity onPress={log}>
+        <ScrollView>
+          {dataFarm.length == 0 ? (
+            <View
+              style={{ justifyContent: "center", marginTop: 50, padding: 20 }}
+            >
+              <Text style={{ fontSize: 30, color: "#f00" }}>
+                Hiện tại chưa có mùa vụ nào, vui lòng tạo mới
+              </Text>
+            </View>
+          ) : (
+            <View>
+              <View style={{ alignItems: "center" }}>
+                <Text style={{color: "#30aec7"}}>Danh sách nông trại</Text>
+              </View>
+              <FlatList
+                data={dataFarm}
+                renderItem={({ item }) => (
+                  <Farm
+                    myFarm={item}
+                    navFarmseason={this.navigationFarmseason}
+                  />
+                )}
+                keyExtractor={(item, index) => index.toString()}
+              />
+            </View>
+          )}
+          {/* <TouchableOpacity onPress={log}>
           <Text>logdata</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
+        </ScrollView>
       </View>
     );
   }

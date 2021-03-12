@@ -5,25 +5,48 @@ import {
   Dimensions,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 var { height, width } = Dimensions.get("window");
 import { styles } from "./stylesAddFarm";
+import addFarmPostData from "../../redux/api/Farm/addFarmPostData";
+import { addFarm } from "../../redux/action/Farm/actionAddFarm";
+import { fetchDataFarm } from "../../redux/action/Farm/actionFetchFarm";
+import { connect } from "react-redux";
 
-export default class AddFarm extends Component {
+class AddFarm extends Component {
   constructor(props) {
     super(props);
     this.state = {
       name: "",
+      address: "",
       email: "",
       phone: "",
     };
   }
   handleAddFarm = () => {
-    const dataFarm={
+    const dataFarm = {
       name: this.state.name,
-      email: this.state.phone,
-      phone: this.state.address,
-    }
+      address: this.state.address,
+      email: this.state.email,
+      phone: this.state.phone,
+      // name: "Nông trại mới",
+      // address: "99 Man thiện",
+      // email: "truongxuannghia140@gmail.com",
+      // phone: "090452305",
+    };
+    console.log(dataFarm);
+    addFarmPostData(dataFarm)
+      .then((res) => {
+        console.log(res);
+        // this.props.addFarm(dataFarm);
+        const token = localStorage.token;
+        this.props.fetchDataFarm(token);
+        alert("Thêm trại thành công");
+      })
+      .catch((err) => console.log(err));
+
+    // this.props.navigation.navigate("dashboard");
     //api post data farm
   };
   navigationHome = () => {
@@ -74,12 +97,21 @@ export default class AddFarm extends Component {
               </Text>
             </View>
             <View style={styles.inputcomponent}>
+              <TouchableOpacity>
+                <TextInput
+                  style={styles.input}
+                  TextContentType="emaiAddress"
+                  keyboardType="email-address"
+                  placeholder="Nhập tên trang trại"
+                  onChangeText={(text) => this.setState({ name: text })}
+                ></TextInput>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.inputcomponent}>
               <TextInput
                 style={styles.input}
-                TextContentType="emaiAddress"
-                keyboardType="email-address"
-                placeholder="Nhập tên trang trại"
-                onChangeText={(text) => this.setState({ name: text })}
+                placeholder="Nhập địa chỉ"
+                onChangeText={(text) => this.setState({ address: text })}
               ></TextInput>
             </View>
             <View style={styles.inputcomponent}>
@@ -87,7 +119,7 @@ export default class AddFarm extends Component {
                 style={styles.input}
                 TextContentType="emaiAddress"
                 keyboardType="email-address"
-                placeholder="Nhập số điện thoại"
+                placeholder="Nhập email"
                 onChangeText={(text) => this.setState({ email: text })}
               ></TextInput>
             </View>
@@ -96,14 +128,14 @@ export default class AddFarm extends Component {
                 style={styles.input}
                 TextContentType="emaiAddress"
                 keyboardType="email-address"
-                placeholder="Nhập địa chỉ"
+                placeholder="Nhập số điện thoại"
                 onChangeText={(text) => this.setState({ phone: text })}
               ></TextInput>
             </View>
           </View>
           <View style={{ flex: 5 }}>
             <TouchableOpacity
-              // onPress={this.handleAddFarm}
+              onPress={this.handleAddFarm}
               style={{
                 height: 45,
                 justifyContent: "center",
@@ -124,3 +156,4 @@ export default class AddFarm extends Component {
     );
   }
 }
+export default connect(null, { addFarm, fetchDataFarm })(AddFarm);

@@ -15,22 +15,28 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { styles } from "./styles";
 
 import handleRegister from "../../../redux/api/User/handleRegister";
+import error from "../../../configs/Error/index";
+import { connect } from "react-redux";
 
 var { height, width } = Dimensions.get("window");
-export default class Register extends Component {
+class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
       secureTextEntry: true,
       nameIcon: "md-eye",
       name: "",
+      firstname: "",
+      lastname: "",
       username: "",
       email: "",
       password: "",
       confirm: "",
       phone: "",
       address: "",
-      errorName: "",
+      errorFirstName: "",
+      errorLastName: "",
+      errorUsername: "",
       errorEmail: "",
       errorPassword: "",
       errorPhone: "",
@@ -40,7 +46,7 @@ export default class Register extends Component {
   }
   _register() {
     this.setState({
-      errorName: "",
+      // errorName: "",
       errorEmail: "",
       errorPassword: "",
       errorPhone: "",
@@ -48,7 +54,8 @@ export default class Register extends Component {
       errorConfirm: "",
     });
     let body = {
-      name: this.state.name,
+      firstname: this.state.firstname,
+      lastname: this.state.lastname,
       username: this.state.username,
       email: this.state.email,
       role: ["ROLE_USER"],
@@ -57,48 +64,42 @@ export default class Register extends Component {
     // TODO : Validation Zone
     const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (
-      this.state.name.trim().length < 6 ||
-      this.state.name.trim().length > 50
+      this.state.firstname.trim().length == 0
     ) {
-      this.setState({ errorName: "*Tên phải từ 6 - 50 ký tự*" });
+      this.setState({ errorFirstName: error.chua_nhap_ho });
     } else if (
-      this.state.email.trim().length < 6 ||
-      this.state.email.trim().length > 20
+      this.state.lastname.trim().length == 0
     ) {
-      this.setState({ errorEmail: "*Email phải từ 6 - 50 ký tự*" });
+      this.setState({ errorLastName: error.chua_nhap_ten });
+    } else if (
+      this.state.lastname.trim().length == 0
+    ) {
+      this.setState({ errorEmail: error.chua_nhap_email });
     } else if (reg.test(this.state.email) !== true) {
-      this.setState({ errorEmail: "*Định dạng email không hợp lệ*" });
+      this.setState({ errorEmail: error.dinh_dang_email_loi });
     } else if (
       this.state.password.trim().length < 6 ||
-      this.state.password.trim().length > 20
+      this.state.password.trim().length > 50
     ) {
-      this.setState({ errorPassword: "*Mật khẩu từ 6 - 20 ký tự*" });
+      this.setState({ errorPassword: error.dinh_dang_mat_khau });
     } else if (
       this.state.confirm.trim().length < 6 ||
-      this.state.confirm.trim().length > 20
+      this.state.confirm.trim().length > 50
     ) {
-      this.setState({ errorConfirm: "*Mật khẩu phải từ 6 - 20 ký tự*" });
+      this.setState({ errorConfirm: error.dinh_dang_mat_khau });
     } else if (this.state.password != this.state.confirm) {
-      this.setState({ errorConfirm: "*Mật khẩu không khớp*" });
-    } else if (
-      this.state.phone.trim().length < 6 ||
-      this.state.phone.trim().length > 20
-    ) {
-      this.setState({ errorPhone: "*Số điện thoại phải từ 6 - 20 ký tự*" });
-    } else if (isNaN(this.state.phone)) {
-      this.setState({ errorPhone: "*Số điện thoại không hợp lệ*" });
-    } else if (this.state.password != this.state.confirm) {
-      this.setState({ errorConfirm: "*Mật khẩu không khớp*" });
+      this.setState({ errorConfirm: error.mat_khau_khong_khop });
     } else {
-      handleRegister(body)
-        .then((data) => {
-          if (data) alert("Đăng Ký Thành Công");
-          // this.props.navigation.navigate("login");
-        })
-        .catch((error) => {
-          alert("Error server:" + error);
-        })
-        .done();
+    handleRegister(body)
+      .then((data) => {
+        if (data) alert("Đăng Ký Thành Công");
+        console.log(data);
+        // this.props.navigation.navigate("login");
+      })
+      .catch((error) => {
+        alert("Error server:" + error);
+      })
+      .done();
     }
   }
   _hidePass() {
@@ -126,22 +127,35 @@ export default class Register extends Component {
             {/* name */}
             <View style={styles.inputcomponent}>
               <View style={{ flexDirection: "row" }}>
-                <Text style={styles.label}>Name: </Text>
-                <Text style={styles.textError}>{this.state.errorName}</Text>
+                <Text style={styles.label}>FirstName: </Text>
+                <Text style={styles.textError}>{this.state.errorFirstName}</Text>
               </View>
 
               <TextInput
                 ref="name"
                 style={styles.input}
-                placeholder="Enter your name"
-                onChangeText={(text) => this.setState({ name: text })}
+                placeholder="Enter your firstname"
+                onChangeText={(text) => this.setState({ firstname: text })}
+              ></TextInput>
+            </View>
+            <View style={styles.inputcomponent}>
+              <View style={{ flexDirection: "row" }}>
+                <Text style={styles.label}>Lastname: </Text>
+                <Text style={styles.textError}>{this.state.errorLastName}</Text>
+              </View>
+
+              <TextInput
+                ref="name"
+                style={styles.input}
+                placeholder="Enter your lastname"
+                onChangeText={(text) => this.setState({ lastname: text })}
               ></TextInput>
             </View>
             {/* username */}
-            <View style={{ ...styles.inputcomponent, paddingLeft: 10 }}>
+            <View style={styles.inputcomponent}>
               <View style={{ flexDirection: "row" }}>
                 <Text style={styles.label}>Username: </Text>
-                <Text style={styles.textError}>{this.state.username}</Text>
+                <Text style={styles.textError}>{this.state.errorUsername}</Text>
               </View>
               <TextInput
                 ref="phone"
@@ -247,3 +261,4 @@ export default class Register extends Component {
     );
   }
 }
+export default connect()(Register);
